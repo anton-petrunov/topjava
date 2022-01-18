@@ -22,14 +22,13 @@ public class UserMealsUtil {
         );
 
         List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
-//        mealsTo.forEach(System.out::println);
+        mealsTo.forEach(System.out::println);
 
 //        System.out.println(filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
     }
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with excess. Implement by cycles
-        List<UserMealWithExcess> mealsWithExceet = new ArrayList<>();
         Map<LocalDate, Integer> consMap = new TreeMap<>();
 
         for (UserMeal currentMeal : meals) {
@@ -42,15 +41,33 @@ public class UserMealsUtil {
             else
                 consMap.put(currentDate, currentCalories);
         }
+        List<UserMealWithExcess> mealsWithExceet = new ArrayList<>();
 
         for (UserMeal currentMeal : meals) {
+            LocalDate currentDate = currentMeal.getDateTime().toLocalDate();
+            if (consMap.get(currentDate) > caloriesPerDay) {
+                mealsWithExceet.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), true));
+            }
+            else {
+                mealsWithExceet.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), false));
+            }
+        }
+
+        List<UserMealWithExcess> result = new ArrayList<>();
+        for (UserMealWithExcess currentMeal : mealsWithExceet) {
+            if (TimeUtil.isBetweenHalfOpen(currentMeal.getDateTime().toLocalTime(), startTime, endTime)) {
+                result.add(currentMeal);
+            }
 
         }
 
         System.out.println("");
         System.out.println(consMap.toString());
+        System.out.println("");
+        System.out.println(mealsWithExceet.toString());
+        System.out.println(result.toString());
 
-        return null;
+        return result;
     }
 
     public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
