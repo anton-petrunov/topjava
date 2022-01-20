@@ -28,45 +28,34 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        // TODO return filtered list with excess. Implement by cycles
-        Map<LocalDate, Integer> consMap = new TreeMap<>();
+        Map<LocalDate, Integer> consolidateMap = new TreeMap<>();
 
         for (UserMeal currentMeal : meals) {
             LocalDate currentDate = currentMeal.getDateTime().toLocalDate();
-            int currentCalories = currentMeal.getCalories();
-            if (consMap.containsKey(currentDate)) {
-                int initCals = consMap.get(currentDate);
-                consMap.put(currentDate, initCals + currentCalories);
-            }
-            else
-                consMap.put(currentDate, currentCalories);
+            int currentCals = currentMeal.getCalories();
+            if (consolidateMap.containsKey(currentDate)) {
+                int initCals = consolidateMap.get(currentDate);
+                consolidateMap.put(currentDate, initCals + currentCals);
+            } else
+                consolidateMap.put(currentDate, currentCals);
         }
-        List<UserMealWithExcess> mealsWithExceet = new ArrayList<>();
+        List<UserMealWithExcess> mealsWithExcess = new ArrayList<>();
 
         for (UserMeal currentMeal : meals) {
             LocalDate currentDate = currentMeal.getDateTime().toLocalDate();
-            if (consMap.get(currentDate) > caloriesPerDay) {
-                mealsWithExceet.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), true));
-            }
-            else {
-                mealsWithExceet.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), false));
+            if (consolidateMap.get(currentDate) > caloriesPerDay) {
+                mealsWithExcess.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), true));
+            } else {
+                mealsWithExcess.add(new UserMealWithExcess(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(), false));
             }
         }
 
         List<UserMealWithExcess> result = new ArrayList<>();
-        for (UserMealWithExcess currentMeal : mealsWithExceet) {
+        for (UserMealWithExcess currentMeal : mealsWithExcess) {
             if (TimeUtil.isBetweenHalfOpen(currentMeal.getDateTime().toLocalTime(), startTime, endTime)) {
                 result.add(currentMeal);
             }
-
         }
-
-        System.out.println("");
-        System.out.println(consMap.toString());
-        System.out.println("");
-        System.out.println(mealsWithExceet.toString());
-        System.out.println(result.toString());
-
         return result;
     }
 
