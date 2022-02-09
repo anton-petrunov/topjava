@@ -17,7 +17,7 @@
 
     <c:forEach var="mealTo" items="${mealsTo}">
         <tr style="color: ${mealTo.isExcess() ? "red" : "green"}">
-            <td>${mealTo.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}</td>
+            <td>${mealTo.dateTime.format(favoriteFormatter)}</td>
             <td>${mealTo.description}</td>
             <td>${mealTo.calories}</td>
         </tr>

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class MealServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         request.setAttribute("mealsTo", mealsTo);
+        request.setAttribute("favoriteFormatter", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 }
