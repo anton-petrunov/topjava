@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -12,12 +13,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class MealServlet extends HttpServlet {
-    final int CALORIES_PER_DAY = 2000;
+    private static final Logger log = getLogger(MealServlet.class);
+    final static int CALORIES_PER_DAY = 2000;
     List<Meal> meals = Arrays.asList(
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
@@ -29,13 +32,11 @@ public class MealServlet extends HttpServlet {
     );
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<MealTo> mealsTo = MealsUtil.filteredByStreams(meals, LocalTime.of(0, 0), LocalTime.of(23, 59), CALORIES_PER_DAY);
+        log.debug("redirect to meals");
+        List<MealTo> mealsTo = MealsUtil.filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY);
 
-
-//        String name = mealsTo.toString();
         request.setCharacterEncoding("UTF-8");
         request.setAttribute("mealsTo", mealsTo);
-        request.getRequestDispatcher("meals.jsp").forward(request, response);
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
-
 }

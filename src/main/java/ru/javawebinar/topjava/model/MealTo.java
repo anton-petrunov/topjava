@@ -1,15 +1,11 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class MealTo {
     private final LocalDateTime dateTime;
-
     private final String description;
-
     private final int calories;
-
     private final boolean excess;
 
     public MealTo(LocalDateTime dateTime, String description, int calories, boolean excess) {
@@ -17,11 +13,6 @@ public class MealTo {
         this.description = description;
         this.calories = calories;
         this.excess = excess;
-    }
-
-    public String getDateTimeFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss");
-        return dateTime.format(formatter);
     }
 
     public LocalDateTime getDateTime() {
