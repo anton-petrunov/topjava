@@ -18,7 +18,8 @@ public class SpringMain {
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ADMIN));
 
             InMemoryMealRepository inMemoryMealRepository = new InMemoryMealRepository();
-            System.out.println(inMemoryMealRepository.get(3));
+            System.out.println(inMemoryMealRepository.get(3, 1));
+            System.out.println(inMemoryMealRepository.getAll(2));
         }
     }
 }
