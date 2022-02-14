@@ -1,16 +1,15 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Role;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -25,6 +24,13 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000, 2),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500, 2),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410, 2)
+    );
+
+    public static final List<User> users = Arrays.asList(
+            new User("nobody", "nobody@nowhere", "psswd", EnumSet.of(Role.USER)),
+            new User("xandra", "boginya@gmail", "psswd", EnumSet.of(Role.USER)),
+            new User("Kirill", "kirill@kirillov", "psswd", EnumSet.of(Role.USER)),
+            new User("Anton", "anton@baton", "psswd", EnumSet.of(Role.USER))
     );
 
     public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
