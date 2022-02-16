@@ -24,8 +24,6 @@ public class InMemoryUserRepository implements UserRepository {
 
     {
         MealsUtil.users.forEach(this::save);
-        System.out.println(this.getByEmail("KIRILL@kirillov"));
-        System.out.println(this.getAll());
     }
 
     @Override
