@@ -12,8 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import static org.junit.Assert.assertThrows;
@@ -37,10 +35,14 @@ public class MealServiceTest {
     private MealService service;
 
     @Test
+    public void updateNotOwn() {
+        assertThrows(NotFoundException.class, () -> service.update(userMeal1, ADMIN_ID));
+    }
+
+    @Test
     public void duplicateDateCreate() {
-        assertThrows(DataAccessException.class, () -> service.create(new Meal(
-                        LocalDateTime.of(2022, Month.JANUARY, 30, 13, 0), "Duplicate Date", 200),
-                USER_ID));
+        assertThrows(DataAccessException.class, () -> service.create(
+                new Meal(userMeal1.getDateTime(), "Duplicate Date", 200), USER_ID));
     }
 
     @Test
