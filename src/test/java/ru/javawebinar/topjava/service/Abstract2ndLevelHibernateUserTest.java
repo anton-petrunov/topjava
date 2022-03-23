@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import ru.javawebinar.topjava.repository.JpaUtil;
-import ru.javawebinar.topjava.service.AbstractUserServiceTest;
 
 public abstract class Abstract2ndLevelHibernateUserTest extends AbstractUserServiceTest {
 
