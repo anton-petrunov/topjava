@@ -50,6 +50,16 @@ function save() {
     });
 }
 
+function filter() {
+    $.ajax({
+        type: "GET",
+        url: ctx.ajaxUrl
+    }).done(function () {
+        window.location.redirect(ctx.ajaxUrl + "filter");
+        updateTable();
+    });
+}
+
 let failedNote;
 
 function closeNoty() {
