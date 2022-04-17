@@ -11,11 +11,11 @@
 
 <div class="jumbotron pt-4">
     <div class="container">
-<        <%--@elvariable id="userTo" type="ru.javawebinar.topjava.to.UserTo"--%>
+        <%--@elvariable id="userTo" type="ru.javawebinar.topjava.to.UserTo"--%>
         <div class="row">
             <div class="col-5 offset-3">
-                <h3>${userTo.name} <spring:message code="app.profile"/></h3>
-                <form:form class="form-group" modelAttribute="userTo" method="post" action="profile"
+                <h3>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h3>
+                <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
 
                     <topjava:inputField labelCode="user.name" name="name"/>
